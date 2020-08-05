@@ -133,7 +133,7 @@ class DCRUNclass:
         with open(filenamecfg,'r') as csvfile1:
             logger.info("cfg has been opened...")
             cfgfile = [row for row in csv.reader(csvfile1, delimiter=',')]
-            numberofchannels=int(np.array(cfgfile)[1][0])
+            numberofchannels=int(np.array(cfgfile[1][0]))
             numberofAnalogchannels=re.sub("\D", "",cfgfile[1][1]) # Some recorings analog channels not dete4cte
             logger.info("Number of analog channels detected: %s" ,numberofAnalogchannels)
             analogAchannellistindex = []
@@ -155,12 +155,12 @@ class DCRUNclass:
                     #print(analogVchannellistindex)
                 else:
                     continue
-            samplingfreq = float(np.array(cfgfile)[numberofchannels+4][0])
-            numsamples = int(np.array(cfgfile)[numberofchannels+4][1])
-            freq = float(np.array(cfgfile)[numberofchannels+2][0])
+            samplingfreq = float(np.array(cfgfile[numberofchannels+4][0]))
+            numsamples = int(np.array(cfgfile[numberofchannels+4][1]))
+            freq = float(np.array(cfgfile[numberofchannels+2][0]))
             intsample = int(samplingfreq/freq)
-            scaleval = float(np.array(cfgfile)[analogVchannellistindex[0]+1][5]) # +1 to get the next one on the list since we start from row 2.... and not 3 in a CFG file
-            scalevalI = float(np.array(cfgfile)[int(analogAchannellistindex[0]+1)][5]) #somewhat dynamic works if all the scaling values are the same for all phases
+            scaleval = float(np.array(cfgfile[analogVchannellistindex[0]+1][5])) # +1 to get the next one on the list since we start from row 2.... and not 3 in a CFG file
+            scalevalI = float(np.array(cfgfile[int(analogAchannellistindex[0]+1)][5])) #somewhat dynamic works if all the scaling values are the same for all phases
             #scaleval = np.array(cfgfile)[3]
             print('multiplier for V:',scaleval)
             print('multiplier for I:',scalevalI)
