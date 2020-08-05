@@ -82,9 +82,9 @@ class DCRUNclass:
         #return faultindex
     
     def printoutDC_RMS(self,DCmag,amp,fund): #(r,amp,mag
-        print("DC Value:",round(DCmag,2))
-        print("Amplitude of Phase: ",round(amp))
-        print("Value of the Fundamental: ",round(fund))
+        print("DC Value (A):",round(DCmag,2),"A")
+        print("Amplitude of Phase (A): ",round(amp))
+        print("Value of the Fundamental (A): ",round(fund))
         print("DC offset: ",round(DCmag/amp*100,2 ),"%")
 
     def __init__(self,whichcurr,sensitivity,start=4,firstorsecondset=0):
