@@ -2,7 +2,7 @@
 
 How to run the program:
 
-Run the Script GetDCOffset_GUI2.1.py or relevant GUI file to start the program then click the buttons
+Run the Script GetDCOffset_GUI.py or relevant GUI file to start the program then click the buttons
 
 This program is Essentially written to easily obtain the DC offset of a Power System Event Recorder (Disturbance Fault Recorders) on an ASCII COMTRADE file. This can be COMTRADE Files from any Relay, or device so long as it is ASCII and not the Binary format.
 
