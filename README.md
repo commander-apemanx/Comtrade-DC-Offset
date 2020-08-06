@@ -4,7 +4,7 @@ How to run the program:
 
 Run the Script GetDCOffset_GUI.py or relevant GUI file to start the program then click the buttons
 
-This program is Essentially written to easily obtain the DC offset of a Power System Event Recorder (Disturbance Fault Recorders) on an ASCII COMTRADE file. This can be COMTRADE Files from any Relay, or device so long as it is ASCII and not the Binary format.
+This program is Essentially written to easily obtain the DC offset of a short circuit curret from a Power System Event Recorder (Disturbance Fault Recorders) on an ASCII COMTRADE file. This can be COMTRADE Files from any Relay, or device so long as it is ASCII and not the Binary format.
 
 Lots of work is still planned and being done on this project and it is in its infancy. 
 The end goal is for this program to analyse such a file, detect a Power System Transmission line fault and get the relevant Currents Voltages and Power from the Oscillographic recordings and populate the data on a Spreadsheet. 
