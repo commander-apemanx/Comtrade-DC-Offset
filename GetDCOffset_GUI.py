@@ -20,7 +20,7 @@ class Project(object):
 
         label1 = ttk.Label(text="Sensitivity (default 35000):").grid(column=1,row=2)
         w1 = Scale(Project.win, from_=0, to=200000,orient=HORIZONTAL)#.grid(column=0,row=3,columnspan=3, sticky = tk.W+tk.E)
-        w1.set(40000)
+        w1.set(35000)
         w1.grid(column=0,row=3,columnspan=3, sticky = tk.W+tk.E)#.pack()
         
         button1 = ttk.Button(Project.win, text="Get DC all phases", command=lambda: self.instruction(1,w1)).grid(column=1,row=4)
