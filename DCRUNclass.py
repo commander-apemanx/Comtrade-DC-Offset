@@ -146,7 +146,7 @@ class DCRUNclass:
                     analogAchannellistindex.append(int(cfgfile[i+2][0]))
                     #print(analogAchannellistindex)
                 if  cfgfile[i+2][4] == 'V' or cfgfile[i+2][4] == 'kV' or cfgfile[i+2][4] == 'kv':
-                    if cfgfile[i+2][4] == 'kV' or cfgfile[i+2][4] == 'kv':
+                    if cfgfile[i+2][4] == 'kV' or cfgfile[i+2][4] == 'kv' or cfgfile[i+2][4] == 'KV':
                         kV = 1000
                     print("Which phases voltage:",cfgfile[i+2][3])
                     logger.info("Voltages have been searched for...")
