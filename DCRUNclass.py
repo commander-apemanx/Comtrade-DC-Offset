@@ -13,12 +13,15 @@ import logging
 import faultdetect
 import impedance_plot
 
+
+
 LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
 logging.basicConfig(filename = "DCGUI.log",level = logging.INFO,format=LOG_FORMAT,filemode='w')
 logger = logging.getLogger()
 
 
 class DCRUNclass:
+       
     def ptog(self,Vsig,Isig,INsig,kfact):
         Vs = np.array(Vsig)
         Is = np.array(Isig) + np.array(INsig)*kfact
@@ -88,8 +91,11 @@ class DCRUNclass:
         print("DC offset: ",round(DCmag/amp*100,2 ),"%")
 
     def __init__(self,whichcurr,sensitivity,start=4,firstorsecondset=0):
+        #lass Preamble
+        plt.close("all") #close all previous possible open plots...
         logger.info("Start index that was given to function: %s", start)
         
+        #Get Fault - Call fault detector first
         Fdt = faultdetect.FaultDetect
         currtime = time.time()
         root = tik.Tk()
