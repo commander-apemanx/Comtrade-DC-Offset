@@ -94,6 +94,9 @@ class DCRUNclass:
         #lass Preamble
         plt.close("all") #close all previous possible open plots...
         logger.info("Start index that was given to function: %s", start)
+
+        #get second set
+        
         
         #Get Fault - Call fault detector first
         Fdt = faultdetect.FaultDetect
@@ -150,7 +153,7 @@ class DCRUNclass:
                     logger.info("Currents have been searched for...")
                     #print("Which phases:",cfgfile[i+2][6])
                     analogAchannellistindex.append(int(cfgfile[i+2][0]))
-                    #print(analogAchannellistindex)
+                    
                 if  cfgfile[i+2][4] == 'V' or cfgfile[i+2][4] == 'kV' or cfgfile[i+2][4] == 'kv':
                     if cfgfile[i+2][4] == 'kV' or cfgfile[i+2][4] == 'kv' or cfgfile[i+2][4] == 'KV':
                         kV = 1000
@@ -158,9 +161,12 @@ class DCRUNclass:
                     logger.info("Voltages have been searched for...")
                     #print("Which phases:",cfgfile[i+2][6])
                     analogVchannellistindex.append(int(cfgfile[i+2][0]))
-                    #print(analogVchannellistindex)
+                    
                 else:
                     continue
+            logger.info("analogAchannellistindex: %s", analogAchannellistindex)
+            logger.info("analogVchannellistindex: %s", analogVchannellistindex)
+
             samplingfreq = float(np.array(cfgfile[numberofchannels+4][0]))
             numsamples = int(np.array(cfgfile[numberofchannels+4][1]))
             freq = float(np.array(cfgfile[numberofchannels+2][0]))
@@ -175,16 +181,25 @@ class DCRUNclass:
             print('Samples for Freq:', intsample)
             print('Freq:',freq)
         #TODO Calc how may samples in 20ms wave
+
+        getsecondsetI=0
+        logger.info("Which set?:%s",firstorsecondset)
+        if firstorsecondset == 2:
+            getsecondsetI=len(analogAchannellistindex)+1 #to get the second set dynamically if analog channel list is weird
+            logger.info(analogAchannellistindex[0]+1+getsecondsetI)
+            logger.info(analogAchannellistindex[1]+1+getsecondsetI)
+            logger.info(analogAchannellistindex[2]+1+getsecondsetI)
+            logger.info(analogAchannellistindex[3]+1+getsecondsetI)
         
         with open(filename,'r') as csvfile:
                 plots = csv.reader(csvfile, delimiter=',')
                 t = []
                 for row in plots:
                     t.append(float(row[1])/1000000) # get us to sec
-                    IR.append(float(row[analogAchannellistindex[0]+1+firstorsecondset]))
-                    IW.append(float(row[analogAchannellistindex[1]+1+firstorsecondset]))
-                    IB.append(float(row[analogAchannellistindex[2]+1+firstorsecondset]))
-                    IN.append(float(row[analogAchannellistindex[3]+1+firstorsecondset]))
+                    IR.append(float(row[analogAchannellistindex[0]+1+getsecondsetI]))
+                    IW.append(float(row[analogAchannellistindex[1]+1+getsecondsetI]))
+                    IB.append(float(row[analogAchannellistindex[2]+1+getsecondsetI]))
+                    IN.append(float(row[analogAchannellistindex[3]+1+getsecondsetI]))
                     R.append(float(row[analogVchannellistindex[0]+1+firstorsecondset]))
                     W.append(float(row[analogVchannellistindex[1]+1+firstorsecondset]))
                     B.append(float(row[analogVchannellistindex[2]+1+firstorsecondset]))
@@ -192,6 +207,8 @@ class DCRUNclass:
                     
                     
         print("Amount of Current analogs:", len(analogAchannellistindex))
+        logger.info("Amount of Current analogs:%s", len(analogAchannellistindex))
+        
         #if there are 4 analogs.
         t = np.array(t)
 
@@ -221,9 +238,19 @@ class DCRUNclass:
         # FAULT DETECT WITH AMPLITUDE ENDS
         
         faultindexR,faultindexW,faultindexB = self.calc_all_phase_faults(t,newIR,newIW,newIB,newIN,sensitivity,start)
-        if not faultindexR or not faultindexW or not faultindexB:
-            print(" No fault found please change sensitivity...")
-            exit()
+        logger.info("faultindexR:%s",faultindexR)
+        logger.info("faultindexW:%s",faultindexW)
+        logger.info("faultindexB:%s",faultindexB)
+        if not faultindexR:
+            print(" No fault found faultindexR please change sensitivity...")
+            faultindexR.append(100)
+        if not faultindexW:
+            print(" No fault found faultindexW please change sensitivity...")
+            faultindexW.append(100)
+        if not faultindexB:
+            print(" No fault found faultindexB please change sensitivity...")
+            faultindexB.append(100)
+            #exit()
         logger.info("First fault index have been assigned...")
 # a test to ensure that we do not pass a larger value of the length of a signal to the fault detector in order to start detectin the second fault
         maxindex0 = max(faultindexR[0],faultindexW[0],faultindexB[0])+ intsample*20 # get somewhere futher than any detected fault

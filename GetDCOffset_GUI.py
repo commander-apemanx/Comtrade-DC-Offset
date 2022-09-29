@@ -66,7 +66,7 @@ class Project(object):
 
     def compute_E(self):
         from DCRUNclass import DCRUNclass
-        dd = DCRUNclass('all',self.sen,start=self.startat,firstorsecondset=8)
+        dd = DCRUNclass('all',self.sen,start=self.startat,firstorsecondset=2)
         #print("Run Code C")
 
     def plotImpedance(self):
